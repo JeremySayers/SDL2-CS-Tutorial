@@ -1,7 +1,7 @@
 #region License
 /* SDL2# - C# Wrapper for SDL2
  *
- * Copyright (c) 2013-2020 Ethan Lee.
+ * Copyright (c) 2013-2021 Ethan Lee.
  *
  * This software is provided 'as-is', without any express or implied warranty.
  * In no event will the authors be held liable for any damages arising from
@@ -205,7 +205,7 @@ namespace SDL2
 		);
 		public static unsafe IntPtr Mix_LoadMUS(string file)
 		{
-			byte* utf8File = SDL.Utf8Encode(file);
+			byte* utf8File = SDL.Utf8EncodeHeap(file);
 			IntPtr handle = INTERNAL_Mix_LoadMUS(
 				utf8File
 			);
@@ -579,7 +579,7 @@ namespace SDL2
 		);
 		public static unsafe int Mix_SetMusicCMD(string command)
 		{
-			byte* utf8Cmd = SDL.Utf8Encode(command);
+			byte* utf8Cmd = SDL.Utf8EncodeHeap(command);
 			int result = INTERNAL_Mix_SetMusicCMD(
 				utf8Cmd
 			);
@@ -599,7 +599,7 @@ namespace SDL2
 		);
 		public static unsafe int Mix_SetSoundFonts(string paths)
 		{
-			byte* utf8Paths = SDL.Utf8Encode(paths);
+			byte* utf8Paths = SDL.Utf8EncodeHeap(paths);
 			int result = INTERNAL_Mix_SetSoundFonts(
 				utf8Paths
 			);
@@ -646,6 +646,21 @@ namespace SDL2
 		[DllImport(nativeLibName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void Mix_CloseAudio();
 
+		public static string Mix_GetError()
+		{
+			return SDL.SDL_GetError();
+		}
+
+		public static void Mix_SetError(string fmtAndArglist)
+		{
+			SDL.SDL_SetError(fmtAndArglist);
+		}
+		
+		public static void Mix_ClearError()
+		{
+			SDL.SDL_ClearError();
+		}
+		
 		#endregion
 	}
 }

@@ -1,7 +1,7 @@
 #region License
 /* SDL2# - C# Wrapper for SDL2
  *
- * Copyright (c) 2013-2020 Ethan Lee.
+ * Copyright (c) 2013-2021 Ethan Lee.
  *
  * This software is provided 'as-is', without any express or implied warranty.
  * In no event will the authors be held liable for any damages arising from
@@ -48,17 +48,17 @@ namespace SDL2
 		 * running with. You will likely want to check this somewhere in your
 		 * program!
 		 */
-		public const int SDL_IMAGE_MAJOR_VERSION = 2;
-		public const int SDL_IMAGE_MINOR_VERSION = 0;
-		public const int SDL_IMAGE_PATCHLEVEL = 6;
+		public const int SDL_IMAGE_MAJOR_VERSION =	2;
+		public const int SDL_IMAGE_MINOR_VERSION =	0;
+		public const int SDL_IMAGE_PATCHLEVEL =		6;
 
 		[Flags]
 		public enum IMG_InitFlags
 		{
-			IMG_INIT_JPG = 0x00000001,
-			IMG_INIT_PNG = 0x00000002,
-			IMG_INIT_TIF = 0x00000004,
-			IMG_INIT_WEBP = 0x00000008
+			IMG_INIT_JPG =	0x00000001,
+			IMG_INIT_PNG =	0x00000002,
+			IMG_INIT_TIF =	0x00000004,
+			IMG_INIT_WEBP =	0x00000008
 		}
 
 		public static void SDL_IMAGE_VERSION(out SDL.SDL_version X)
@@ -74,7 +74,7 @@ namespace SDL2
 		{
 			SDL.SDL_version result;
 			IntPtr result_ptr = INTERNAL_IMG_Linked_Version();
-			result = (SDL.SDL_version)Marshal.PtrToStructure(
+			result = (SDL.SDL_version) Marshal.PtrToStructure(
 				result_ptr,
 				typeof(SDL.SDL_version)
 			);
@@ -94,11 +94,11 @@ namespace SDL2
 		);
 		public static unsafe IntPtr IMG_Load(string file)
 		{
-			byte* utf8File = SDL.Utf8Encode(file);
+			byte* utf8File = SDL.Utf8EncodeHeap(file);
 			IntPtr handle = INTERNAL_IMG_Load(
 				utf8File
 			);
-			Marshal.FreeHGlobal((IntPtr)utf8File);
+			Marshal.FreeHGlobal((IntPtr) utf8File);
 			return handle;
 		}
 
@@ -122,8 +122,7 @@ namespace SDL2
 			IntPtr src,
 			int freesrc,
 			string type
-		)
-		{
+		) {
 			int utf8TypeBufSize = SDL.Utf8Size(type);
 			byte* utf8Type = stackalloc byte[utf8TypeBufSize];
 			return INTERNAL_IMG_LoadTyped_RW(
@@ -142,14 +141,13 @@ namespace SDL2
 		public static unsafe IntPtr IMG_LoadTexture(
 			IntPtr renderer,
 			string file
-		)
-		{
-			byte* utf8File = SDL.Utf8Encode(file);
+		) {
+			byte* utf8File = SDL.Utf8EncodeHeap(file);
 			IntPtr handle = INTERNAL_IMG_LoadTexture(
 				renderer,
 				utf8File
 			);
-			Marshal.FreeHGlobal((IntPtr)utf8File);
+			Marshal.FreeHGlobal((IntPtr) utf8File);
 			return handle;
 		}
 
@@ -182,16 +180,15 @@ namespace SDL2
 			IntPtr src,
 			int freesrc,
 			string type
-		)
-		{
-			byte* utf8Type = SDL.Utf8Encode(type);
+		) {
+			byte* utf8Type = SDL.Utf8EncodeHeap(type);
 			IntPtr handle = INTERNAL_IMG_LoadTextureTyped_RW(
 				renderer,
 				src,
 				freesrc,
 				utf8Type
 			);
-			Marshal.FreeHGlobal((IntPtr)utf8Type);
+			Marshal.FreeHGlobal((IntPtr) utf8Type);
 			return handle;
 		}
 
@@ -210,12 +207,12 @@ namespace SDL2
 		);
 		public static unsafe int IMG_SavePNG(IntPtr surface, string file)
 		{
-			byte* utf8File = SDL.Utf8Encode(file);
+			byte* utf8File = SDL.Utf8EncodeHeap(file);
 			int result = INTERNAL_IMG_SavePNG(
 				surface,
 				utf8File
 			);
-			Marshal.FreeHGlobal((IntPtr)utf8File);
+			Marshal.FreeHGlobal((IntPtr) utf8File);
 			return result;
 		}
 
@@ -237,13 +234,13 @@ namespace SDL2
 		);
 		public static unsafe int IMG_SaveJPG(IntPtr surface, string file, int quality)
 		{
-			byte* utf8File = SDL.Utf8Encode(file);
+			byte* utf8File = SDL.Utf8EncodeHeap(file);
 			int result = INTERNAL_IMG_SaveJPG(
 				surface,
 				utf8File,
 				quality
 			);
-			Marshal.FreeHGlobal((IntPtr)utf8File);
+			Marshal.FreeHGlobal((IntPtr) utf8File);
 			return result;
 		}
 
