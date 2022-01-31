@@ -12,5 +12,9 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Sayers.SDL2.Core" Version="1.0.11" />
+  </ItemGroup>
 	
 </Project>
